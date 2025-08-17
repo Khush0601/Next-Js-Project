@@ -1,10 +1,15 @@
 import React from 'react'
 
-export default function MealsLayout({children}) {
+export default function MealsLayout({main,sidebar}) {
   return (
-    <>
+    <div>
         <div>MealsLayout</div>
-        {children}
-    </>
+        <div>
+          {main}
+        </div>
+        <div>
+          {sidebar}
+        </div>
+    </div>
   )
 }
