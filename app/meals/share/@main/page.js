@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Mainpage() {
   return (
-    <div>Mainpage</div>
+    <div>
+    <div>main</div>
+    </div>
   )
 }
