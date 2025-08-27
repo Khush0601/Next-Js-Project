@@ -2,9 +2,17 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      <h1>page</h1>
-    </div>
+  <div className="w-full h-full bg-red-100 p-10">
+  <div>
+    <div className='font-bold text-2xl '>
+    Todo
+  </div>
+  <div>form</div>
+  </div>
+
+</div>
+      
+   
 
   )
 }
