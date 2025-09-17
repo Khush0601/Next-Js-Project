@@ -142,6 +142,19 @@ const Page: React.FC = () => {
                   <div className="text-sm text-gray-500">
                     {todo.date} at {todo.time}
                   </div>
+                 <div className="mt-2 flex gap-2">
+  <button className="bg-yellow-200 hover:bg-yellow-300 text-gray-800 px-3 py-1 rounded-md text-sm font-medium transition-colors">
+    Edit
+  </button>
+  <button className="bg-green-200 hover:bg-green-300 text-gray-800 px-3 py-1 rounded-md text-sm font-medium transition-colors">
+    Mark Complete
+  </button>
+  <button className="bg-red-200 hover:bg-red-300 text-gray-800 px-3 py-1 rounded-md text-sm font-medium transition-colors">
+    Delete
+  </button>
+</div>
+
+
                 </li>
               ))}
             </ul>
