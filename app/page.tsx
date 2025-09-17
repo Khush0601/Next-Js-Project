@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState,type ChangeEvent, type FormEvent } from 'react'
+import React, { useEffect, useState,type ChangeEvent, type FormEvent } from 'react'
+import { toast } from 'react-toastify'
 
 interface InputData {
   date: string
@@ -18,6 +19,7 @@ const Page: React.FC = () => {
   }
 
   const [input, setInput] = useState<InputData>(inputData)
+  const [todos, setTodos] = useState<InputData[]>([])
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>, 
@@ -28,10 +30,48 @@ const Page: React.FC = () => {
     })
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log("Form Submitted:", input)
+  useEffect(() => {
+    const fetchTodos = async () => {
+    try {
+      const res = await fetch('/api/todos')
+      const data = await res.json()
+      setTodos(data)
+    } catch (error) {
+      console.error('Error fetching todos:', error)
+       toast.error('Failed to load todos')
+    }
   }
+  fetchTodos()
+  }, [])
+
+   const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    // toast.info('Adding todo...')
+    try {
+      const res = await fetch('/api/todos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      })
+
+      if (res.ok) {
+        const newTodo = await res.json()
+        setTodos((prev) => [...prev, newTodo])
+        setInput(inputData)
+         toast.success('Todo added successfully!')
+      } else {
+        console.error('Failed to add todo')
+         toast.error('Failed to add todo')
+      }
+    } catch (error) {
+      console.error('Error posting todo:', error)
+      toast.error('Something went wrong!')
+    }
+  }
+
+
+
+  console.log(todos)
 
   console.log(input)
 
@@ -85,8 +125,31 @@ const Page: React.FC = () => {
           </form>
         </div>
       </div>
-    </div>
+
+      <div className="mt-6">
+          <h2 className="font-semibold text-2xl mb-4">Your Todos</h2>
+          {todos.length === 0 ? (
+            <p>No todos yet</p>
+          ) : (
+            <ul className="space-y-2">
+              {todos.map((todo, idx) => (
+                <li
+                  key={idx}
+                  className="p-3 bg-white rounded-md shadow-sm border"
+                >
+                  <div className="font-bold">{todo.task}</div>
+                  <div>{todo.taskDesc}</div>
+                  <div className="text-sm text-gray-500">
+                    {todo.date} at {todo.time}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
   )
+  
 }
 
 export default Page

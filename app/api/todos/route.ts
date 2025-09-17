@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getTodos, addTodo, updateTodo, deleteTodo } from "../../controllers/todoController";
+import { getTodos, addTodo } from "../../controllers/todoController";
 
-// GET /api/todos
+
 export async function GET() {
   try {
     const todos = await getTodos();
@@ -11,7 +11,7 @@ export async function GET() {
   }
 }
 
-// POST /api/todos
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
